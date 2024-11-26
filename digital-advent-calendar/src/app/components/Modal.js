@@ -18,20 +18,24 @@ const Modal = ({ day, onClose, saveOnClose, mode }) => {
 
     // Load saved data from local storage
     useEffect(() => {
-        const savedText = localStorage.getItem(`day-${day}-text`);
-        const savedImage = localStorage.getItem(`day-${day}-image`);
+        if (day !== null) {
+            const savedText = localStorage.getItem(`day-${day}-text`);
+            const savedImage = localStorage.getItem(`day-${day}-image`);
+            
+            if (savedText) {
+                setText(savedText);
+            } else {
+                setText(defaultData.text);
+            }
 
-        if (savedText) {
-            setText(savedText);
-        } else {
-            setText(defaultData.text);
+            if (savedImage) {
+                setImage(savedImage);
+            } else {
+                setImage(defaultData.image);
+            }
         }
-
-        if (savedImage) {
-            setImage(savedImage);
-        } else {
-            setImage(defaultData.image);
-        }
+        
+       
 
     }, [day]); // Only rerun if `day` changes
 
@@ -91,22 +95,14 @@ const Modal = ({ day, onClose, saveOnClose, mode }) => {
         <div className="fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center" onClick={handleBackgroundClose}>
             
             <div className="bg-dogwood p-4 rounded-lg max-w-lg w-full relative" onClick={(e) => e.stopPropagation()}>
-                <div className="flex items-center justify-center w-full pb-12 font-bold text-xl">
-                    {mode ? (<>
-                        <div className="text-3xl mt-2">Day {day}</div>
-                        <button 
-                            className="absolute right-2 top-2 text-white hover:bg-pink px-2 rounded"
-                            onClick={handleClose}
-                        >
+                <div className="flex items-center justify-center font-bold w-full">
+                    {mode && (<div className="font-script text-3xl mt-2">Day {day}</div>)}
+                    <button 
+                        className="absolute right-2 top-1 text-white hover:bg-pink px-2 rounded"
+                        onClick={handleClose}
+                    >
                         X
-                        </button>
-                        </>
-                    ) : <button 
-                    className="absolute right-2 top-1 text-white hover:bg-pink px-2 rounded"
-                    onClick={handleClose}
-                >
-                x
-                </button>}
+                    </button>
                 </div>
 
                 {/* <div className="flex flex-row w-full p-3 items-center justify-between z-10 font-bold text-xl">
@@ -116,11 +112,11 @@ const Modal = ({ day, onClose, saveOnClose, mode }) => {
             {mode ? (
                 <>
                 {/* Image Content */}
-                    {image && <img className="w-full h-auto max-h-48 object-contain rounded" src={image} alt="Uploaded" />}
+                    {image && <img className="w-full h-auto max-h-48 object-contain rounded my-4" src={image} alt="Uploaded image" />}
                     <input
                         type="file"
                         accept="image/*"
-                        className="w-full mt-10 mb-5"
+                        className="w-full mt-3 mb-5"
                         onChange={handleImageChange}
                     />
             
@@ -134,11 +130,17 @@ const Modal = ({ day, onClose, saveOnClose, mode }) => {
 
                 </>
             ) : (
-                <div className="flex flex-col items-center justify-center">
+                <motion.div
+                    className="flex flex-col items-center justify-center"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                >
                     {/* View Mode: Display Saved Content */}
-                    {text && <h2 className="text-white text-xl text-center">{text}</h2>}
-                    {image && <img className="w-full h-auto max-h-48 object-contain rounded mt-4" src={image} alt="Uploaded" />}
-                </div>
+                    {text && <h2 className="pt-10 text-white text-xl text-center">{text}</h2>}
+                    {image && <img className="w-full h-auto max-h-48 object-contain rounded my-6" src={image} alt="Uploaded image" />}
+                </motion.div>
             )}
             
 
