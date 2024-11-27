@@ -15,8 +15,12 @@ module.exports = {
         lightpink: "#C89FA3",
         jasmine: "#F7D488",
         dogwood: "#CEB5A7",
+        paledogwood: "#D4BEBE",
         cream: "#EAEFB1",
-        nyanza: "#E9F7CA"
+        nyanza: "#E9F7CA",
+        rosy: "#FAD8D6",
+        lavendar: "#D5CFE1",
+        coolgray: "#A09ABC"
       },
       fontFamily: {
         script: ['"Style Script"', 'sans-serif'],
