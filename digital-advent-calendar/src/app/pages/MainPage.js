@@ -39,14 +39,14 @@ export default function MainPage() {
     };
 
     return (
-      <div className="bg-gradient-to-b from-paledogwood to-lavendar min-h-screen">
+      <div className="bg-gradient-to-b from-white to-lavendar p-10 pb-60 min-h-screen relative">
         <Snowfall />
-        <div className="text-center p-5 flex flex-col z-20 gap-4">
-            <h1 className="font-script text-5xl font-extrabold text-white drop-shadow-lg">open me</h1>
+        <div className="p-8 pt-0 flex flex-col z-20 gap-4">
+            <h1 className="text-5xl font-lavish text-black drop-shadow-lg">one day</h1>
             <button
-                className="p-2 m-3 bg-coolgray hover:bg-lavendar rounded-full text-lg font-bold"
+                className="p-3 mt-3 bg-brown hover:bg-lavendar rounded-full text-md font-bold"
                 onClick={() => setModalOpen(true)}>
-                    add new calendar    +
+                    add calendar +
             </button>
             <AddCalendar modalOpen={modalOpen} onClose={closeModal} addCalendar={addCalendar} />
         </div>
@@ -80,7 +80,11 @@ export default function MainPage() {
                 </Link> 
             ))}
             </ul>
-            </div>}
+        
+            
+        </div>}
+
+        
         </div>
 
     
@@ -89,7 +93,7 @@ export default function MainPage() {
         <img
         src="/snowman.png"
         alt="Snowman decoration in the bottom-right hand corner"
-        className="absolute bottom-0 right-0 h-32 w-auto sm:h-48 sm:right-4 md:right-0" 
+        className="absolute bottom-0 right-0 h-32 w-auto sm:h-40 sm:right-4 md:right-0" 
     />
     
         
