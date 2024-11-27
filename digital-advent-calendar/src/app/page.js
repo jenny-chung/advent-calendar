@@ -1,9 +1,10 @@
-import Calendar from "./components/Calendar";
+import MainPage from "./pages/MainPage";
+import Spline from '@splinetool/react-spline/next';
 
 export default function Home() {
   return (
-    <div className="bg-sky-950">
-      <Calendar />
+    <div>
+      <MainPage />
     </div>
   );
 }
