@@ -2,16 +2,16 @@
 
 import { motion } from "framer-motion"
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import Snowfall from 'react-snowfall';
 import Modal from './Modal';
 
-const Calendar = () => {
+const Calendar = ({ calendar }) => {
 
     // Days 1-24
     const days = Array.from({ length: 24 }, (_, index) => index + 1); 
 
     const [shuffledDays, setShuffledDays] = useState([]);
-
     const [selectedDay, setSelectedDay] = useState(null);
     const [modalOpen, setModalOpen] = useState(false);
     const [editMode, setEditMode] = useState(true);
@@ -20,7 +20,8 @@ const Calendar = () => {
         // Shuffle the days and store the shuffled array in state
         const shuffled = [...days].sort(() => Math.random() - 0.5);
         setShuffledDays(shuffled);
-    }, []);
+
+    }, [calendar.id]);
 
     const openModal = (day) => {
         setSelectedDay(day);
@@ -35,17 +36,6 @@ const Calendar = () => {
         setEditMode((prevMode) => !prevMode);
     }
 
-    const saveContentForDay = (text, image) => {
-        console.log('Saving data for day:', selectedDay);
-        
-        localStorage.setItem(`day-${selectedDay}-text`, text);
-        
-        if (image) {
-            localStorage.setItem(`day-${selectedDay}-image`, image)
-        }
-        
-    }
-
   return (
     <div className="flex flex-col justify-between items-center h-screen relative pt-14">
         {!editMode && (<Snowfall 
@@ -57,10 +47,15 @@ const Calendar = () => {
               radius={[1, 4]}
         
         />)} 
+        <h1 className="font-bold text-xl text-center">{calendar.name}</h1>
 
-      <button className="absolute top-4 left-4 sm:left-1/2 sm:-translate-x-1/2 p-3 m-3 bg-cyan-700 hover:bg-cyan-800 rounded-full text-sm font-bold" onClick={toggleEditMode}>
-        {editMode ? 'View Calendar' : 'Edit Calendar'}
-      </button>
+        <div className="absolute top-4 left-4 flex items-center space-x-4">
+            <Link href="/"><button className="p-3 bg-cyan-700 hover:bg-cyan-800 rounded-full text-sm font-bold">Home</button></Link>
+            <button className="p-3 m-3 bg-cyan-700 hover:bg-cyan-800 rounded-full text-sm font-bold" onClick={toggleEditMode}>
+                {editMode ? 'View Calendar' : 'Edit Calendar'}
+            </button>
+        </div>
+     
 
       <img
         src="/snowman.png"
@@ -157,14 +152,14 @@ const Calendar = () => {
         className="absolute bottom-0 right-3 h-120 w-auto" 
     /> */}
 
-    <img
+    {/* <img
         src="/snowman.png"
         alt="Snowman decoration in the bottom-right hand corner"
         className="absolute bottom-0 right-0 h-32 w-auto sm:h-48 sm:right-4 md:right-0" 
-    />
+    /> */}
   
         {modalOpen && (
-            <Modal day={selectedDay} onClose={closeModal} saveOnClose={saveContentForDay} mode={editMode} className="sm:w-full lg:w-2/3" />
+            <Modal day={selectedDay} id={calendar.id} onClose={closeModal} mode={editMode} className="sm:w-full lg:w-2/3" />
         )}
 
     </div>
