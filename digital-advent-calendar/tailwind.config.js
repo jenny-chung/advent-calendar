@@ -23,7 +23,8 @@ module.exports = {
         coolgray: "#A09ABC"
       },
       fontFamily: {
-        script: ['"Style Script"', 'sans-serif'],
+        script: ["Style Script", 'sans-serif'],
+        lavish: ["Lavishly Yours", 'cursive'],
       },
     },
   },

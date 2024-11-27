@@ -37,7 +37,7 @@ const Calendar = ({ calendar }) => {
     }
 
   return (
-    <div className="flex flex-col justify-between items-center h-screen relative pt-14">
+    <div className="bg-gradient-to-b from-white to-blue-200 flex flex-col justify-between items-center h-screen relative pt-14">
         {!editMode && (<Snowfall 
             style={{
                 position: 'fixed',
@@ -47,7 +47,7 @@ const Calendar = ({ calendar }) => {
               radius={[1, 4]}
         
         />)} 
-        <h1 className="font-bold text-xl text-center">{calendar.name}</h1>
+        <h1 className="font-lavish font-bold text-gray-400 text-5xl text-center">{calendar.name}</h1>
 
         <div className="absolute top-4 left-4 flex items-center space-x-4">
             <Link href="/"><button className="p-3 bg-cyan-700 hover:bg-cyan-800 rounded-full text-sm font-bold">Home</button></Link>
@@ -63,7 +63,7 @@ const Calendar = ({ calendar }) => {
         className="absolute bottom-0 left-4 md:left-24 h-24 w-auto sm:h-32 z-10"
       />
 
-    <div className="flex flex-row flex-grow w-full items-end justify-center md:p-10 md:pb-0" >
+    <div className="flex flex-row flex-grow w-full items-end justify-center" >
 
         <div className="font-script grid grid-cols-2 grid-rows-2 sm:grid-cols-4 gap-4 pb-12 px-8 pt-8 bg-rose-900 md:ml-10">
                 {shuffledDays.slice(0, 8).map((day) => (
