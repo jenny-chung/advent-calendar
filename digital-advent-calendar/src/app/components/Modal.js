@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
 
-const Modal = ({ day, onClose, saveOnClose, mode }) => {
+const Modal = ({ day, id, onClose, mode }) => {
 
     const message = day === 24 ? "the wait is over!" : `${24 - day} more days till christmas :)`;
 
@@ -12,15 +12,14 @@ const Modal = ({ day, onClose, saveOnClose, mode }) => {
         image: "/image.png"
     };
 
-
     const [text, setText] = useState('');
     const [image, setImage] = useState(null);
 
-    // Load saved data from local storage
+    // Fetch saved content from localStorage when modal opens
     useEffect(() => {
-        if (day !== null) {
-            const savedText = localStorage.getItem(`day-${day}-text`);
-            const savedImage = localStorage.getItem(`day-${day}-image`);
+        if (day !== null && id) {
+            const savedText = localStorage.getItem(`${id}-day-${day}-text`);
+            const savedImage = localStorage.getItem(`${id}-day-${day}-image`);
             
             if (savedText) {
                 setText(savedText);
@@ -35,23 +34,21 @@ const Modal = ({ day, onClose, saveOnClose, mode }) => {
             }
         }
         
-       
-
-    }, [day]); // Only rerun if `day` changes
+    }, [day, id]);
 
     // Auto-save text and image to localStorage every time the state changes
     useEffect(() => {
         
-        console.log("Saving to local storage")
-        if (text) {
-            localStorage.setItem(`day-${day}-text`, text);
+        console.log("Auto saving calendar content to local storage")
+        if (text && text !== defaultData.text) {
+            localStorage.setItem(`${id}-day-${day}-text`, text);
         }
            
-        if (image) {
-            localStorage.setItem(`day-${day}-image`, image);
+        if (image && image !== defaultData.image) {
+            localStorage.setItem(`${id}-day-${day}-image`, image);
         }
 
-    }, [day, text, image]);
+    }, [day, id, text, image]);
 
     const handleTextChange = (e) => {
         setText(e.target.value);
@@ -65,7 +62,7 @@ const Modal = ({ day, onClose, saveOnClose, mode }) => {
             reader.onloadend = () => {
                 const base64Image = reader.result;
                 setImage(base64Image);
-                localStorage.setItem(`day-${day}-image`, base64Image);
+                localStorage.setItem(`${id}-day-${day}-image`, base64Image);
             };
 
             reader.readAsDataURL(file);
@@ -73,13 +70,23 @@ const Modal = ({ day, onClose, saveOnClose, mode }) => {
         }
     };
 
+    const handleSave = (text, image) => {
+        console.log('Saving data for day:', day);
+        
+        localStorage.setItem(`${id}-day-${day}-text`, text);
+        
+        if (image) {
+            localStorage.setItem(`${id}-day-${day}-image`, image);
+        }        
+    }
+    
     const handleClose = () => {
         if (mode) {
             const savedText = localStorage.getItem(`day-${day}-text`);
             const savedImage = localStorage.getItem(`day-${day}-image`);
 
             if (savedText != text || savedImage != image) {
-                saveOnClose(text, image);
+                handleSave(text, image);
             }
         }
         onClose();
