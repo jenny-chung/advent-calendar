@@ -20,7 +20,9 @@ module.exports = {
         nyanza: "#E9F7CA",
         rosy: "#FAD8D6",
         lavendar: "#D5CFE1",
-        coolgray: "#A09ABC"
+        coolgray: "#A09ABC",
+        caribbean: "#006C67",
+        midnight: "#003844"
       },
       fontFamily: {
         script: ["Style Script", 'sans-serif'],

@@ -29,7 +29,7 @@ export default function AddCalendar({ modalOpen, onClose, addCalendar }) {
         addCalendar(newCalendar);
 
         // Show success toast upon calendar creation
-        toast.success("Calendar created successfully!", {
+        toast.success(`Calendar ${calendarName} created successfully!`, {
             position: "top-right",
             autoClose: 3000,
             hideProgressBar: false,
